@@ -1,0 +1,77 @@
+guyna25
+
+=============================
+=      File description     =
+=============================
+Main Package (filesprocessing):
+
+    1. FileFilter - This class filters files
+    2. FileProessingHelper - Helper class for filesprocessing excercise
+    3. MainProcessor - This class represents a program that can process a commandFile and a Sourcedirectory
+    and act according to PDR
+
+
+Sub-packages:
+    -commandFileHandling
+        1. CommandFileReader.java - This class reads and parses a command file
+        2. Section - This class represents a section in a commandFile
+        3. SectionFactory - This class represents a section factory
+    -fileSorting
+        1. ComparatorFactory - This class is a factory for excercise-relevant comparators
+        2. FileComparators.java: 1. AbsCompare- This class represents an order of files by absolute path
+                                 2. SizeCompare- This class represents an order of files by size
+                                 3. TypeCompare- This class represents an order of files by type
+        3. FileMergeSort - This class represents a sorting of files with merge sort
+    -sourcedirHandling:
+        FileArrayFactory - This class represents a factory that creates a file array froma directory
+
+
+=============================
+=          Design           =
+=============================
+
+The main methodology of the implementation maximizes encapsulation and simplfying all APIS as much as
+possible I also wanted to make debugging as easy as possible so I tried to concentrate each 'job' that needs
+to get done in each file to a single method.
+
+ Furthermore, I realized most errors can be caught early on, so to improve efficeny, all files which do
+ actual sorting rely on correct input. During the stage of parsing and processing the commandFile and
+ sourcedir, all errors are caught and handled in accordance of excercise description. This simplifies the
+ object s which actually filter and order the files and makes error easier to detect.
+
+ Also, I tried to seperate between ordering and filtering as those seemed as thematically separate tasks. This
+  means that the only object that communicates with all other object is the one running the entire program
+
+
+=============================
+=  Implementation details   =
+=============================
+Excercies description questions:
+
+    1. I chose to detect the parts of each task that needs to be performed and break it down into micro-tasks
+    which can be seperated into object. I proffered not to create objects which extend another kind of object
+    as most object did not share a behaviour or data member. This is because the parsing of data revoles
+    around many small conditions which are dvery specific and do not involve the actual filtering and ordering
+    . Moreover, I tried to have each task contained in the object that handles it to follow the single choice
+    principle and to enable extending or replacing certain object if needed. Also, I avoided inner
+    dependencies as much as I could THe program follows a simple flow (with harder implementation): The files
+    to be used are taken from the given directory and the commands are taken from relevant file and turned
+    into objects which are friendly for program use (i.e they have methods for easy data access and each type
+    of condition is stored in a different data member)
+    . Afterwards, those are transferred to the FIlter and Order part of the program which communictes with the
+     objects using public single choice api and finally, relevant files are printed.
+
+     2. All errors are propagated up into the main funcion to prevent operations when there's invalid input of
+      any kind. I treated the main method as a manager so, as we saw in class, its job is to stop the 'work'
+      if any problem occurs. Relevant message is propagted up the call stack. Warnings cause default filtering
+       and ordering so they were treated as an extra message that is added if a warning occurs and program
+       runs as usual and handls is during runtime
+
+     3. I used merge sort which was the simplest easiest efficent sort to use. I did not use  aspecific data
+     structure as merge sort can be done recursively and I prefer to avoid needless memory allocation if
+     possible
+
+
+
+This exercise was forged with blood and glory, I hope you'll enjoy it more than I did
+
